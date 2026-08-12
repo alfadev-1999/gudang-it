@@ -12,24 +12,25 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::firstOrCreate([
-            'name' => 'department.view',
-            'guard_name' => 'web',
-        ]);
+        $permissions = [
+            // Department
+            'department.view',
+            'department.create',
+            'department.edit',
+            'department.delete',
 
-        Permission::firstOrCreate([
-            'name' => 'department.create',
-            'guard_name' => 'web',
-        ]);
+            // Vendor
+            'vendor.view',
+            'vendor.create',
+            'vendor.edit',
+            'vendor.delete',
+        ];
 
-        Permission::firstOrCreate([
-            'name' => 'department.edit',
-            'guard_name' => 'web',
-        ]);
-
-        Permission::firstOrCreate([
-            'name' => 'department.delete',
-            'guard_name' => 'web',
-        ]);
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate([
+                'name' => $permission,
+                'guard_name' => 'web',
+            ]);
+        }
     }
 }

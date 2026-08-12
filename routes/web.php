@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,6 +15,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
 
+    // Department
     Route::get('/departments', [DepartmentController::class, 'index'])
         ->middleware('permission:department.view')
         ->name('departments.index');
@@ -37,6 +39,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/departments/{department}', [DepartmentController::class, 'destroy'])
         ->middleware('permission:department.delete')
         ->name('departments.destroy');
+
+
+    // Vendor
+    Route::get('/vendors', [VendorController::class, 'index'])
+        ->middleware('permission:vendor.view')
+        ->name('vendors.index');
+
+    Route::get('/vendors/create', [VendorController::class, 'create'])
+        ->middleware('permission:vendor.create')
+        ->name('vendors.create');
+
+    Route::post('/vendors', [VendorController::class, 'store'])
+        ->middleware('permission:vendor.create')
+        ->name('vendors.store');
 
 
     // Profile
