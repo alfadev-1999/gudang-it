@@ -119,6 +119,12 @@ class VendorController extends Controller
      */
     public function update(Request $request, Vendor $vendor)
     {
+        $name = preg_replace('/\s+/', ' ', trim($request->name));
+
+        $request->merge([
+            'name' => $name,
+        ]);
+
         $request->validate([
             'code' => [
                 'required',
@@ -126,12 +132,41 @@ class VendorController extends Controller
                 'max:20',
                 Rule::unique('vendors', 'code')->ignore($vendor->id),
             ],
-            'name' => ['required', 'string', 'max:150'],
-            'contact_person' => ['nullable', 'string', 'max:100'],
-            'phone' => ['nullable', 'string', 'max:30'],
-            'email' => ['nullable', 'email', 'max:100'],
-            'address' => ['nullable', 'string'],
-            'description' => ['nullable', 'string'],
+
+            'name' => [
+                'required',
+                'string',
+                'max:150',
+                Rule::unique('vendors', 'name')->ignore($vendor->id),
+            ],
+
+            'contact_person' => [
+                'nullable',
+                'string',
+                'max:100',
+            ],
+
+            'phone' => [
+                'nullable',
+                'string',
+                'max:30',
+            ],
+
+            'email' => [
+                'nullable',
+                'email',
+                'max:100',
+            ],
+
+            'address' => [
+                'nullable',
+                'string',
+            ],
+
+            'description' => [
+                'nullable',
+                'string',
+            ],
         ]);
 
         $vendor->update([

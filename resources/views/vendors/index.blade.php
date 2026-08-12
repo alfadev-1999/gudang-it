@@ -69,7 +69,9 @@
                                 <th class="border border-gray-300 px-4 py-2 text-left">
                                     Email
                                 </th>
-
+                                <th class="border border-gray-300 px-4 py-2 text-left">
+                                    Aksi
+                                </th>
                             </tr>
                         </thead>
 
@@ -102,14 +104,22 @@
                                 <td class="border border-gray-300 px-4 py-2">
                                     {{ $vendor->email ?? '-' }}
                                 </td>
-
+                                <td class="border border-gray-300 px-4 py-2">
+                                    @can('vendor.edit')
+                                    <a
+                                        href="{{ route('vendors.edit', $vendor) }}"
+                                        class="inline-flex items-center justify-center px-3 py-1.5 bg-blue-600 text-white rounded-md text-xs font-semibold hover:bg-blue-700">
+                                        Edit
+                                    </a>
+                                    @endcan
+                                </td>
                             </tr>
 
                             @empty
 
                             <tr>
                                 <td
-                                    colspan="6"
+                                    colspan="7"
                                     class="border border-gray-300 px-4 py-4 text-center">
                                     Belum ada data vendor.
                                 </td>

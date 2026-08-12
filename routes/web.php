@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
 
 
     // Vendor
+    // Vendor
     Route::get('/vendors', [VendorController::class, 'index'])
         ->middleware('permission:vendor.view')
         ->name('vendors.index');
@@ -54,6 +55,17 @@ Route::middleware('auth')->group(function () {
         ->middleware('permission:vendor.create')
         ->name('vendors.store');
 
+    Route::get('/vendors/{vendor}/edit', [VendorController::class, 'edit'])
+        ->middleware('permission:vendor.edit')
+        ->name('vendors.edit');
+
+    Route::put('/vendors/{vendor}', [VendorController::class, 'update'])
+        ->middleware('permission:vendor.edit')
+        ->name('vendors.update');
+
+    Route::delete('/vendors/{vendor}', [VendorController::class, 'destroy'])
+        ->middleware('permission:vendor.delete')
+        ->name('vendors.destroy');
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])
